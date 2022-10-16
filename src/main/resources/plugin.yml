@@ -1,0 +1,15 @@
+name: ElytraLimiter
+version: '${project.version}'
+main: me.bobsmiley.elytralimiter.ElytraLimiter
+api-version: 1.19
+authors: [ BoBsmil3Y ]
+description: Allow user only a certain amount of elytra
+commands:
+  esetlimit:
+    permission: elytra.setlimit
+    description: "Command to set the global elytra limit."
+    default: op
+    usage: /<command>
+  eamount:
+    description: "Send your actual limit."
+    usage: /<command>

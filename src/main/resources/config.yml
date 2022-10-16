@@ -1,0 +1,12 @@
+# ElytraLimiter
+# V1.0
+
+# -- Options section
+# Limit of elytra that a player can have.
+limit-per-player: 5
+
+# -- Messages section
+# Accept '&' color code format.
+no-perm: "&c&lYourServer &8» &cYou don't have permission to do that."
+not-a-whole-number: "&c&lYourServer &8» Argument was not an whole number."
+limit-reach: "&c&lYourServer &8» &cYou have reached the limit of elytra possible."

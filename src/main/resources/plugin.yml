@@ -11,5 +11,6 @@ commands:
     default: op
     usage: /<command>
   eamount:
+    permission: elytra.amount
     description: "Send your actual limit."
     usage: /<command>

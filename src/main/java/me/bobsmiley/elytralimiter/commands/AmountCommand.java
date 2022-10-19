@@ -1,5 +1,6 @@
 package me.bobsmiley.elytralimiter.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,11 +31,12 @@ public class AmountCommand implements CommandExecutor {
         final Player p = (Player) sender;
         final String uuid = p.getUniqueId().toString();
 
-        if(! map.containsKey(uuid)) {
+        if(! map.containsKey(uuid))
             map.put(uuid, 0);
-            p.sendMessage("Not key found. Settings to 0");
-        } else
-            p.sendMessage("Amount of limit : " + map.get(uuid));
+        else {
+            final String message = this.config.getString("amount-of-elytra").replace("%nbElytra", Integer.toString(map.get(uuid))).replace("%limit", Integer.toString(limit));
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+        }
 
         return true;
     }

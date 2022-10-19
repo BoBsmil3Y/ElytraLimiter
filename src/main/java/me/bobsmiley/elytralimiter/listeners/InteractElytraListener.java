@@ -9,8 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class InteractElytraListener implements Listener {
@@ -18,11 +18,13 @@ public class InteractElytraListener implements Listener {
     final Map<String, Integer> map;
     final private int limit;
     final private FileConfiguration config;
+    final ArrayList<String> worldsName;
 
     public InteractElytraListener(Map<String, Integer> map, int limit, FileConfiguration config){
         this.map = map;
         this.limit = limit;
         this.config = config;
+        this.worldsName = (ArrayList<String>) this.config.getStringList("worlds-to-check");
     }
 
     // Add one to the elytra harvest when clicking on elytra and not limit is reach
@@ -36,27 +38,20 @@ public class InteractElytraListener implements Listener {
         final String uuid = p.getUniqueId().toString();
         final ItemFrame frame = (ItemFrame) event.getEntity();
 
-        //Ajouter dans config option liste monde
-        //if(! p.getWorld().getName().contains("end")) return;
+        if (frame == null) return;
+        if(! frame.getItem().getType().equals(Material.ELYTRA)) return;
+        if(! this.worldsName.contains(p.getWorld().getName())) return;
 
-        if (frame != null) {
-            ItemStack item = frame.getItem();
-            if(item.getType().equals(Material.ELYTRA)){
+        int playerActualLimit = map.containsKey(uuid) ? map.get(uuid) : 0;
 
-                int playerActualLimit;
-
-                if(! map.containsKey(uuid)) playerActualLimit = 0;
-                else playerActualLimit = map.get(uuid);
-
-                if(playerActualLimit >= limit){
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.config.getString("limit-reach")));
-                    event.setCancelled(true);
-                }
-                else
-                    map.put(uuid, playerActualLimit+1);
-
-            }
+        if(playerActualLimit >= limit){
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.config.getString("limit-reach")));
+            event.setCancelled(true);
         }
+        else
+            map.put(uuid, playerActualLimit+1);
+
+
     }
 
 }

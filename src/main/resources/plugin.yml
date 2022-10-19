@@ -9,8 +9,8 @@ commands:
     permission: elytra.setlimit
     description: "Command to set the global elytra limit."
     default: op
-    usage: /<command>
+    usage: /<command> <a whole number>
   eamount:
     permission: elytra.amount
-    description: "Send your actual limit."
+    description: "Send your actual amount of elytra collected."
     usage: /<command>

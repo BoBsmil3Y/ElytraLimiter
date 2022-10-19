@@ -30,7 +30,7 @@ public final class ElytraLimiter extends JavaPlugin {
         this.getCommand("esetlimit").setExecutor(new ElimitCommand(this));
         this.getCommand("eamount").setExecutor(new AmountCommand(this.playersLimit, limit, config));
         getServer().getPluginManager().registerEvents(new InteractElytraListener(this.playersLimit, limit, config), this);
-        getServer().getPluginManager().registerEvents(new LoosingElytraListener(this.playersLimit, limit, config), this);
+        getServer().getPluginManager().registerEvents(new LoosingElytraListener(this.playersLimit, config), this);
 
     }
 

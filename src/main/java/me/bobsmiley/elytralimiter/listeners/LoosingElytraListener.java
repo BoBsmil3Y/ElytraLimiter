@@ -14,24 +14,22 @@ import java.util.Map;
 public class LoosingElytraListener implements Listener {
 
     final Map<String, Integer> map;
-    final private int limit;
     final private FileConfiguration config;
 
-    public LoosingElytraListener(Map<String, Integer> map, int limit, FileConfiguration config){
+    public LoosingElytraListener(Map<String, Integer> map, FileConfiguration config){
         this.map = map;
-        this.limit = limit;
         this.config = config;
     }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event){
 
-        Player p = event.getEntity();
+        final Player p = event.getEntity();
 
         if(! p.getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.VOID)) return;
 
-        ItemStack[] items = p.getInventory().getContents();
         int elytraAmount = 0;
+        ItemStack[] items = p.getInventory().getContents();
 
         for(ItemStack item: items)
             if(item != null && item.getType().equals(Material.ELYTRA))

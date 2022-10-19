@@ -18,23 +18,24 @@ public class ElimitCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        FileConfiguration config = this.pl.getConfig();
+        final FileConfiguration config = this.pl.getConfig();
 
         if(! (sender instanceof ConsoleCommandSender)){
             Player p = (Player) sender;
-            if(! p.hasPermission("elytralimiter.admin"))
+            if(! p.hasPermission("elytra.setlimit"))
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("no-perm")));
         }
 
         if(args.length != 1) return false;
-        int limit = 0;
+        final int limit;
 
         try { limit = Integer.parseInt(args[0]); }
         catch (NumberFormatException e) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("not-a-whole-number")));
+            return true;
         }
 
-        config.set("limit-per-player", limit);
+        this.pl.getConfig().set("limit-per-player", limit);
         this.pl.saveConfig();
 
         return true;

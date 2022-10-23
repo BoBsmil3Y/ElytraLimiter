@@ -14,13 +14,16 @@ import java.util.Map;
 public class LoosingElytraListener implements Listener {
 
     final Map<String, Integer> map;
-    final private FileConfiguration config;
 
-    public LoosingElytraListener(Map<String, Integer> map, FileConfiguration config){
+    public LoosingElytraListener(Map<String, Integer> map){
         this.map = map;
-        this.config = config;
     }
 
+    /**
+     * On player death, if it's caused by the void, it will decrease the amount
+     * of elytra that was in the player inventory from the player actual limit.
+     * @param event the player death event
+     */
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event){
 

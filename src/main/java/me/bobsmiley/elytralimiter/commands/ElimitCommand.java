@@ -15,6 +15,15 @@ public class ElimitCommand implements CommandExecutor {
 
     public ElimitCommand(ElytraLimiter pl){ this.pl = pl; }
 
+    /**
+     * Command that will set the global limit of elytra
+     * that a player can collect.
+     * @param sender Source of the command
+     * @param command Command which was executed
+     * @param label Alias of the command which was used
+     * @param args Passed command arguments
+     * @return
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 

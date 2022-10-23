@@ -16,18 +16,24 @@ import java.util.Map;
 public class InteractElytraListener implements Listener {
 
     final Map<String, Integer> map;
-    final private int limit;
     final private FileConfiguration config;
     final ArrayList<String> worldsName;
 
-    public InteractElytraListener(Map<String, Integer> map, int limit, FileConfiguration config){
+    public InteractElytraListener(Map<String, Integer> map, FileConfiguration config){
         this.map = map;
-        this.limit = limit;
         this.config = config;
         this.worldsName = (ArrayList<String>) this.config.getStringList("worlds-to-check");
     }
 
     // Add one to the elytra harvest when clicking on elytra and not limit is reach
+
+    /**
+     * Add one to the player's elytra collected amount when
+     * right-clicking on an item frame containing an elytra.
+     * Only if the world is in the list of world to
+     * check in configuration.
+     * @param event the entity damage by entity event
+     */
     @EventHandler (priority = EventPriority.HIGH)
     public void onInteractElytra(EntityDamageByEntityEvent event){
 
@@ -44,13 +50,12 @@ public class InteractElytraListener implements Listener {
 
         int playerActualLimit = map.containsKey(uuid) ? map.get(uuid) : 0;
 
-        if(playerActualLimit >= limit){
+        if(playerActualLimit >= this.config.getInt("limit-per-player")){
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.config.getString("limit-reach")));
             event.setCancelled(true);
         }
         else
             map.put(uuid, playerActualLimit+1);
-
 
     }
 

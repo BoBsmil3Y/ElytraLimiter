@@ -15,12 +15,8 @@ public final class ElytraLimiter extends JavaPlugin {
 
     final private FileConfiguration config = this.getConfig();
     private Map<String, Integer> playersLimit = new HashMap<>();
-    private int limit = this.config.getInt("limit-per-player");
 
-    /* Known problem :
-     * If player give to each other Elytras,they will not be able to take new one.
-     * It can be complicated when they are playing in groups and the player
-     * */
+
     @Override
     public void onEnable() {
 
@@ -28,9 +24,9 @@ public final class ElytraLimiter extends JavaPlugin {
         if(this.config.contains("data")) this.retrieveData();
 
         this.getCommand("esetlimit").setExecutor(new ElimitCommand(this));
-        this.getCommand("eamount").setExecutor(new AmountCommand(this.playersLimit, limit, config));
-        getServer().getPluginManager().registerEvents(new InteractElytraListener(this.playersLimit, limit, config), this);
-        getServer().getPluginManager().registerEvents(new LoosingElytraListener(this.playersLimit, config), this);
+        this.getCommand("eamount").setExecutor(new AmountCommand(this.playersLimit, config));
+        getServer().getPluginManager().registerEvents(new InteractElytraListener(this.playersLimit, config), this);
+        getServer().getPluginManager().registerEvents(new LoosingElytraListener(this.playersLimit), this);
 
     }
 
@@ -42,6 +38,9 @@ public final class ElytraLimiter extends JavaPlugin {
 
     }
 
+    /**
+     * Save the HashMap of limit per player to the config.
+     */
     private void saveToData() {
 
         Iterator<Map.Entry<String, Integer>> itr = playersLimit.entrySet().iterator();
@@ -55,6 +54,9 @@ public final class ElytraLimiter extends JavaPlugin {
         this.saveConfig();
     }
 
+    /**
+     * Retrieve back the HashMap from the config file, and clear the section.
+     */
     private void retrieveData() {
 
         this.config.getConfigurationSection("data").getKeys(false).forEach(key -> {
